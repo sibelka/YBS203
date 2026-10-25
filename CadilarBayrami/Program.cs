@@ -1,22 +1,28 @@
-﻿
-using System;
+﻿using System;
 public class Karakter
 {
     protected string ad;
     protected string emoji;
+    protected ConsoleColor renk;
+
     public Karakter()
     {
         this.ad = "Cadılar Bayramı Karakteri";
         this.emoji = "";
+        this.renk = ConsoleColor.Blue;
     }
-    public Karakter(string ad, string emoji)
+    public Karakter(string ad, string emoji, ConsoleColor renk)
     {
         this.ad = ad;
         this.emoji = emoji;
+        this.renk = renk;
     }
-    public void goster()
+    public virtual void goster()
     {
+        Console.BackgroundColor = renk;
         Console.WriteLine(ad + " " + emoji);
+        System.Threading.Thread.Sleep(1000);
+        Console.ResetColor();
     }
 }
 public class Canavar : Karakter
@@ -26,8 +32,8 @@ public class Canavar : Karakter
     {
         this.korkutucu_cumle = "";
     }
-    public Canavar(string ad, string emoji, string cumle) : base(ad,
-emoji)
+    public Canavar(string ad, string emoji, string cumle)
+        : base(ad, emoji, ConsoleColor.Red)
     {
         this.korkutucu_cumle = cumle;
     }
@@ -37,16 +43,21 @@ emoji)
         Console.WriteLine("\n" + korkutucu_cumle + "\n");
         Console.ResetColor();
     }
+    public override void goster()
+    {
+        base.goster(); // Atasının goster() fonksiyonu çağrıldı.
+        korkut();
+    }
 }
 public class Hayvan : Karakter
 {
     protected string davranis;
-    protected string renk;
     public Hayvan() : base()
     {
         this.davranis = "";
     }
-    public Hayvan(string ad, string emoji, string davranis) : base(ad, emoji)
+    public Hayvan(string ad, string emoji, string davranis) :
+        base(ad, emoji, ConsoleColor.Green)
     {
         this.davranis = davranis;
     }
@@ -55,6 +66,11 @@ public class Hayvan : Karakter
         Console.ForegroundColor = ConsoleColor.Green;
         Console.WriteLine("\n" + ad + ": " + davranis + "\n");
         Console.ResetColor();
+    }
+    public override void goster()
+    {
+        base.goster(); // Atasının goster() fonksiyonu çağrıldı.
+        davran();
     }
 }
 class Halloween
@@ -65,15 +81,13 @@ class Halloween
 
         Canavar vampir = new Canavar("Kont Dracula", "🧛", "Senin kanını emerim!");
         vampir.goster();
-        vampir.korkut();
 
         Canavar zombi = new Canavar("Zombi", "🧟️", "Beyin! Beyin! Beyin!");
         zombi.goster();
-        zombi.korkut();
 
         Hayvan kurbaga = new Hayvan("Kurbağa", "🐸", "Vrak vrak der ve zıplar.");
         kurbaga.goster();
-        kurbaga.davran();
+
         Console.WriteLine("\nMutlu Cadilar Bayrami!");
     }
 }
