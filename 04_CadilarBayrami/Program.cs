@@ -1,4 +1,6 @@
-﻿using System;
+// Program.cs
+
+using System;
 public class Karakter
 {
     protected string ad;
