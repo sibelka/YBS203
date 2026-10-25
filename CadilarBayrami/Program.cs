@@ -12,6 +12,7 @@ namespace CadilarBayrami
     public class Canavar
     {
         protected string ad;
+        protected float health;
         string Korkut() { return ad + " BOOO!"; }
         public Canavar() { }
     }
